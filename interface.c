@@ -18,12 +18,14 @@ GtkWidget* create_window1(void){
     GtkWidget* window;          /* create and connect by glade */
     GtkWidget* vbox1;           /* create and connect by glade */
 
-    GtkWidget* scrollwindow2;   /* add by hand */
+    GtkWidget* scrollwindow2;   /* create and connect by glade */
+    GtkWidget* viewport2;       /* create and connect by glade */
     GtkWidget *vte;             /* add by hand */ 
 
     window        = GTK_WIDGET(gtk_builder_get_object (builder,"window1"));
     vbox1         = GTK_WIDGET(gtk_builder_get_object (builder,"vbox1"));
-    //scrollwindow2 = GTK_WIDGET(gtk_builder_get_object (builder,"scrollwindow2"));
+    scrollwindow2 = GTK_WIDGET(gtk_builder_get_object (builder,"scrollwindow2"));
+    viewport2     = GTK_WIDGET(gtk_builder_get_object (builder,"viewport2"));
 
 
     // Hierachy
@@ -38,18 +40,20 @@ GtkWidget* create_window1(void){
     vte_terminal_set_background_transparent(VTE_TERMINAL(vte), FALSE);
     vte_terminal_fork_command(VTE_TERMINAL(vte), NULL, NULL, NULL, cpath, TRUE, TRUE,TRUE);
     vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL (vte), TRUE); 
-    //vte_terminal_set_scroll_on_output(VTE_TERMINAL (vte), TRUE); 
+    vte_terminal_set_scroll_on_output(VTE_TERMINAL (vte), TRUE); 
+    
+    gtk_container_add(GTK_CONTAINER(viewport2), vte);
 
 
 
 
     /* scrollwindow2 for vte */
-    scrollwindow2 = gtk_scrolled_window_new(NULL, NULL);
-    gtk_container_set_border_width(GTK_CONTAINER(scrollwindow2), 5);  
-    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrollwindow2), vte);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwindow2), GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
+    //scrollwindow2 = gtk_scrolled_window_new(NULL, NULL);
+    //gtk_container_set_border_width(GTK_CONTAINER(scrollwindow2), 5);  
+    //gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrollwindow2), vte);
+    //gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrollwindow2), GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 
-    gtk_box_pack_start_defaults(GTK_BOX(vbox1), scrollwindow2);
+    //gtk_box_pack_start_defaults(GTK_BOX(vbox1), scrollwindow2);
 
     /* connect the signals in the interface */
     gtk_builder_connect_signals(builder,NULL);
