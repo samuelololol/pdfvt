@@ -14,21 +14,17 @@ GtkWidget* create_window1(void){
         g_error_free (error);
     }
 
-    /* load the UI elements */
+    /* Pull out the UI elements built by glade3 */
     GtkWidget* window;          /* create and connect by glade */
-    GtkWidget* vbox1;           /* create and connect by glade */
-
-    GtkWidget* scrollwindow2;   /* create and connect by glade */
     GtkWidget* viewport2;       /* create and connect by glade */
-    GtkWidget *vte;             /* add by hand */ 
+
+    GtkWidget *vte;             /* add by manually */ 
 
     window        = GTK_WIDGET(gtk_builder_get_object (builder,"window1"));
-    vbox1         = GTK_WIDGET(gtk_builder_get_object (builder,"vbox1"));
-    scrollwindow2 = GTK_WIDGET(gtk_builder_get_object (builder,"scrollwindow2"));
     viewport2     = GTK_WIDGET(gtk_builder_get_object (builder,"viewport2"));
 
-    // {{{
     // Hierachy
+    // {{{
     // ------------------------
     //    ->vbox1
     //      + scrollwindow1
@@ -38,7 +34,7 @@ GtkWidget* create_window1(void){
     //      + hbox
     // }}}
 
-    /* vte instance creation */
+    /* create vte manually */
     vte = vte_terminal_new(); 
     vte_terminal_set_background_transparent(VTE_TERMINAL(vte), FALSE);
     vte_terminal_fork_command(VTE_TERMINAL(vte), NULL, NULL, NULL, cpath, TRUE, TRUE,TRUE);
