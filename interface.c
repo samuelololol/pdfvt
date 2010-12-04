@@ -17,11 +17,13 @@ GtkWidget* create_window1(void){
     /* Pull out the UI elements built by glade3 */
     GtkWidget* window;          /* create and connect by glade */
     GtkWidget* viewport2;       /* create and connect by glade */
+    GtkWidget* terminal1;       /* create and connect by glade */
 
-    GtkWidget *vte;             /* add by manually */ 
+    //GtkWidget *vte;             /* add by manually */ 
 
     window        = GTK_WIDGET(gtk_builder_get_object (builder,"window1"));
     viewport2     = GTK_WIDGET(gtk_builder_get_object (builder,"viewport2"));
+    terminal1     = GTK_WIDGET(gtk_builder_get_object (builder,"terminal1"));
 
     // Hierachy
     // {{{
@@ -34,15 +36,18 @@ GtkWidget* create_window1(void){
     //      + hbox
     // }}}
 
+    vte_terminal_fork_command(VTE_TERMINAL(terminal1), NULL, NULL, NULL, cpath, TRUE, TRUE,TRUE);
+
+
     /* create vte manually */
-    vte = vte_terminal_new(); 
-    vte_terminal_set_background_transparent(VTE_TERMINAL(vte), FALSE);
-    vte_terminal_fork_command(VTE_TERMINAL(vte), NULL, NULL, NULL, cpath, TRUE, TRUE,TRUE);
-    vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL (vte), TRUE); 
-    vte_terminal_set_scroll_on_output(VTE_TERMINAL (vte), TRUE); 
+    //vte = vte_terminal_new(); 
+    //vte_terminal_set_background_transparent(VTE_TERMINAL(vte), FALSE);
+    //vte_terminal_fork_command(VTE_TERMINAL(vte), NULL, NULL, NULL, cpath, TRUE, TRUE,TRUE);
+    //vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL (vte), TRUE); 
+    //vte_terminal_set_scroll_on_output(VTE_TERMINAL (vte), TRUE); 
     
     /* add custom widget to those built by glad3 */
-    gtk_container_add(GTK_CONTAINER(viewport2), vte);
+    //gtk_container_add(GTK_CONTAINER(viewport2), vte);
 
     /* connect the signals in the interface */
     gtk_builder_connect_signals(builder,NULL);
